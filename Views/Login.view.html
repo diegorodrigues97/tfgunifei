@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Login</title>
+  </head>
+  <body>
+
+  <div class="container">
+
+    <button class="btn btn-primary requestRoute" data-route="&main&" data-id="24">Click me!</button>
+
+    <form method="post" action="/request.php" id="form1">
+
+      <legend>Login</legend>
+      <input type="text" name="login" required>
+
+      <legend>Passwords</legend>
+      <input type="password" name="password" required>
+
+      <input type="submit" value="Logar">
+      <input type="hidden" name="token" value="">
+      <input type="hidden" name="controller" value="controllerGeneral@ckeckUserCredentials">
+
+    </form>
+
+  </div>
+
+<script>
+
+    $(document).ready(function(){
+
+      /*$("form").submit(function(event){
+        event.preventDefault();
+        let formData = $(this).serializeArray();
+
+        let response = Application.requestController(
+        formData,
+        {success:test}
+        );
+      });
+
+      function test(d)
+      {
+        console.log(d);
+      }*/
+
+
+
+    });
+
+</script>
+
+  </body>
+
+</html>

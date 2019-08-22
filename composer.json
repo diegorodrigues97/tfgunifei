@@ -1,0 +1,17 @@
+{
+  "autoload" :{
+    "psr-4" : {
+      "Core\\" : "Core",
+      "Core\\Database\\" : "Core/Database",
+      "Classes\\" : "Classes"
+    }
+  },
+
+  "require" : {
+    "php" : ">=7.0.0"
+  },
+
+  "require-dev" : {
+    
+  }
+}

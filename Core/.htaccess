@@ -1,0 +1,9 @@
+# Acesso restrito!
+deny from all
+
+#Protege arquivo
+<files ~ "^.*\.([Hh][Tt][Aa])">
+order allow,deny
+deny from all
+satisfy all
+</files>
