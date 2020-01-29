@@ -10,7 +10,7 @@ class Mysql extends PDO
 {
 	protected $conn;
 	protected $errors;
-	protected $lastId;
+	protected $lastId; 
 
 	public function __construct($params = false)
 	{
@@ -19,11 +19,19 @@ class Mysql extends PDO
 			$params = getAppConfig()['database'];
 		}
 		
-		$this->conn = new \PDO("mysql:dbname={$params['dbname']};host={$params['host']}",
+		try{
+            $this->conn = new \PDO("mysql:dbname={$params['dbname']};host={$params['host']}",
 			$params['user'],
 			$params['password'],
-			array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'')
-		);
+			array(
+                \PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\'',
+                \PDO::ATTR_PERSISTENT => true,   //allows you to avoid the overhead of establishing a new connection every time a script needs to talk to a database
+                )
+		    );
+        }
+        catch(PDOException $e){
+            print "Database Exception: " . $e.getMessage() . "<br/>";
+        }
 	}
 
 	public function lastId(){

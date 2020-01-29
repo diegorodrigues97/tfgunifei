@@ -24,16 +24,15 @@ return [
 
   [
     "route" => "/",
-    "controller"=>false,
-    "view"=>"homepage",
+    "controller"=>"Pedro@Index",
     "vars" => [],
     "accessKeys" =>[],
     "name" => "homepage",
-    "title" =>"Homepage",
+    "title" =>"Homepage", 
     "requireLogin" => false
   ],
 
-  [ 
+  [
     "route" => "/sobre",
     "view"=>"sobre",
     "vars" => ["id"],
@@ -44,7 +43,7 @@ return [
 
   [
     "route" => "/login",
-    "controller"=>"controllerGeneral@showFormLogin",
+    "controller"=>"General@showFormLogin",
     "vars" => ["id","id2"],
     "accessKeys" =>[],
     "name" => "login",

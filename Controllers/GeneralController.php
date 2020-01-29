@@ -40,6 +40,7 @@ function receiveLogin()
 
 function ckeckUserCredentials($input)
 {
+  print_r($input);
   $app = Application::getApp();
   $user = $app->getUser();
   $response = $user->login($input);

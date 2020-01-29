@@ -80,13 +80,15 @@ function getVars()
 
 function load()
 {
+  //Remove the word 'Controller' if exists
+  $controllerName = str_replace("Controller", "", $this->controller_name);
 
-  if(!is_file(ADS_CONTROLLERS . $this->controller_name . '.php'))
+  if(!is_file(ADS_CONTROLLERS . $controllerName . 'Controller.php'))
   {
-    throw new \Exception("Invalid Controller Name: " . $this->controller_name, 1002);
+    throw new \Exception("Invalid Controller Name: " . $controllerName, 1002);
   }
 
-  require_once ADS_CONTROLLERS . $this->controller_name . '.php';
+  require_once ADS_CONTROLLERS . $controllerName . 'Controller.php';
 
   if(!is_callable($this->controller_function))
   {
