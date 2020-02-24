@@ -1,5 +1,5 @@
 <?php
-
+ 
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +51,7 @@ define("ADS_DATABASE_SCRIPTS", ADS_DATABASE . 'scripts' . DIRECTORY_SEPARATOR);
 define("ADS_VIEWS",  ADS_ROOT . 'Views' . DIRECTORY_SEPARATOR);
 define("ADS_TEMPLATES",  ADS_ROOT . 'Templates' . DIRECTORY_SEPARATOR);
 define("ADS_CONTROLLERS",  ADS_ROOT . 'Controllers' . DIRECTORY_SEPARATOR);
+define("ADS_MODELS",  ADS_ROOT . 'Models' . DIRECTORY_SEPARATOR);
 define("ADS_CLASSES",  ADS_ROOT . 'Classes' . DIRECTORY_SEPARATOR);
 define("ADS_BACKUP",  ADS_ROOT . 'Backup' . DIRECTORY_SEPARATOR);
 define("ADS_PUBLIC_HTML",  ADS_ROOT . 'public_html' . DIRECTORY_SEPARATOR);
@@ -106,7 +107,7 @@ spl_autoload_register(function($nameClass){
   {
 		require_once ADS_ROOT . $nameClass . ".php";
 	}
-});
+}); 
 */
 
 require_once(COMPOSER_AUTOLOAD);

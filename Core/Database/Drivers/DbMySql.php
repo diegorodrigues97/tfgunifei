@@ -2,7 +2,7 @@
 
 namespace Core\Database;
 
-use Core\Database\IDatabase;
+use Core\Database\IDatabase; 
 
 class DbMySql implements IDatabaseDriver
 {

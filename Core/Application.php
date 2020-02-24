@@ -1,12 +1,12 @@
 <?php
 
-namespace Core;
+namespace Core; 
 
 require_once('../config.php');
 
 use Core\User\User;
 use Core\Site;
-use Core\Page;
+use Core\Page; 
 use Core\Security;
 use Core\Validation;
 

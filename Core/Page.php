@@ -138,9 +138,9 @@ function render()
     //Check, is necessary some key
     if(!$this->verifyKeys())
     {
-      throw new \Exception('Access Danied!', 6002);
+      throw new \Exception('Access Danied!', 6002); 
     }
-    //Call Controller or Ciew
+    //Call Controller or View
     if($this->controller)
     {
       return $this->renderController();

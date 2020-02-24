@@ -104,7 +104,7 @@ function getCurrentPage($route = false)
     {
       $route = $_SERVER["REQUEST_URI"];
     }
-    //Check if is a route name
+    //Check if is a route name 
     if(preg_match('/&(.*?)&/', $route, $out))
     {
       $page_name = str_replace('&','', $route);

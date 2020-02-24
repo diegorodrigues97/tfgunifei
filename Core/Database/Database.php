@@ -6,7 +6,7 @@ require_once("../config.php");
 
 use PDO; 
 
-class DbConnection
+class Database
 {
 	protected $conn;
 	protected $errors;
@@ -34,6 +34,12 @@ class DbConnection
 
 	function __construct()
 	{
+	//Load Driver to Database defined in App Config
+
+	//Set connection params to Driver chosen
+
+
+
 		$this->Entity = "";
 		$this->DbDriver = "";
 	}
@@ -133,7 +139,7 @@ class DbConnection
 
 
 	
-	
+
 	
 	private function CheckCommandCohesion()
 	{

@@ -9,7 +9,7 @@ use PDO;
 class Mysql extends PDO
 {
 	protected $conn;
-	protected $errors;
+	protected $errors;  
 	protected $lastId; 
 
 	public function __construct($params = false)

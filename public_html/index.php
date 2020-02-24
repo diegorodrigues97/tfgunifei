@@ -2,7 +2,7 @@
 
 require_once('../config.php');
 
-use Core\Application;
+use Core\Application; 
 use Core\View;
 use Core\Template;
 
@@ -31,8 +31,8 @@ if(isset($_GET['url']))
 else
 {
 	$route = DIRECTORY_SEPARATOR;
-}
-
+} 
+ 
 $app = Application::getApp();
 
 try

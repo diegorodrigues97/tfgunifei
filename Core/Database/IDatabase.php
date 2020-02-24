@@ -2,8 +2,8 @@
 
 namespace Core\Database;
 
-interface IRepositoryGeneral
-{
+interface IRepositoryGeneral 
+{ 
     public function GetById($id);
 
     public function GetAll();
