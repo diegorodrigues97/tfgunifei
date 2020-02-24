@@ -63,7 +63,7 @@ function __construct($viewName, $vars = array()){
     if(!empty($vars)){
         $code = $this->loadVars($vars, $code);
     }
-    $this->headProcessing($code);
+    $code = $this->headProcessing($code);
     $this->addBody($code);
 }
 
@@ -142,7 +142,14 @@ function render($enableToken = true){
 private function addBody($value){
     $html = str_replace(array("\n", "\s", "\t"), array('', '', ''), $value);
     preg_match("/<body(.*?)>(.*?)<\/body>/", $html, $out);
-    array_push($this->page_body, $out[2]);
+    //Se não encontrar a tag body, considera tudo como body
+    if(count($out) == 0){
+        array_push($this->page_body, $value);
+    }
+    else{
+        array_push($this->page_body, $out[2]);
+    }
+    
 }
 
 /*
@@ -157,7 +164,13 @@ private function headProcessing($code){
     $code = str_replace(array("\n", "\s", "\t"), array('', '', ''), $code);
     //Get HEAD tag
     preg_match_all("/<head>(.*?)<\/head>/", $code, $out);
+    //Se não for encontrado nada, não adiciona nada
+    if(count($out[0]) == 0){
+        return $code;
+    }
     $tag_head = $out[1][0];
+    //Remove head tag from code
+    $code = str_replace($out[0][0], "", $code);
     //Obtém os parâmetros 'href' da tags 'link'
     preg_match_all('/<link( rel=".*?")?( type=".*?")? href="(.*?)">/', $tag_head, $out);
     foreach($out[3] as $value){
@@ -186,6 +199,8 @@ private function headProcessing($code){
     foreach($out[0] as $value){
         array_push($this->tag_meta, $value);
     }
+
+    return $code;
 }
 
 

@@ -20,15 +20,4 @@ require_once('../config.php');
 */
 
 
-return [
-
-  [
-    "route" => "/",
-    "controller"=>"Homepage@Index",
-    "vars" => [],
-    "accessKeys" =>[],
-    "name" => "homepage",
-    "title" =>"Homepage", 
-    "requireLogin" => false
-  ]
-];
+return [];
