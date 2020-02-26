@@ -11,7 +11,6 @@ class ComposerStaticInitd2f1abf012d612fca8924e32da3da48f
         array (
             'Core\\Database\\' => 14,
             'Core\\' => 5,
-            'Classes\\' => 8,
         ),
     );
 
@@ -23,10 +22,6 @@ class ComposerStaticInitd2f1abf012d612fca8924e32da3da48f
         'Core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Core',
-        ),
-        'Classes\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/Classes',
         ),
     );
 

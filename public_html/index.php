@@ -26,11 +26,11 @@ if(!isset($_SESSION['app']))
 //Get Url value
 if(isset($_GET['url']))
 {
-	$route = DIRECTORY_SEPARATOR . $_GET['url'];
+	$route = "/" . $_GET['url'];
 }
 else
 {
-	$route = DIRECTORY_SEPARATOR;
+	$route = "/";
 } 
  
 $app = Application::getApp();

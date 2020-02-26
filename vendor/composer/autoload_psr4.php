@@ -8,5 +8,4 @@ $baseDir = dirname($vendorDir);
 return array(
     'Core\\Database\\' => array($baseDir . '/Core/Database'),
     'Core\\' => array($baseDir . '/Core'),
-    'Classes\\' => array($baseDir . '/Classes'),
 );

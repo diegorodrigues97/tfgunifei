@@ -8,14 +8,14 @@
 */
 
 use Core\Database\Mysql as Db;
-use Core\View as View;
+use Core\View;
 use Core\Application as Application;
 use Core\Request as Request;
 
 
 function showFormLogin($input = [])
 {
-
+  
   $view = new View("Login");
   $view->render();
 }
@@ -33,9 +33,15 @@ function showMainPaiel($input)
   }
 }
 
-function receiveLogin()
+function Home()
 {
-  echo "Hello World!";
+
+  $message = "Hello World!";
+
+  
+  $view = new View("Login", compact('message'));
+  $view->render();
+  
 }
 
 function ckeckUserCredentials($input)

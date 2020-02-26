@@ -20,4 +20,11 @@ require_once('../config.php');
 */
 
 
-return [];
+return [
+    [
+        "route" => "/",
+        "controller" => "Home@Index",
+        "name" => "Home",
+        "title" => "Home"
+    ]
+];
