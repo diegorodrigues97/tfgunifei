@@ -1,0 +1,44 @@
+{
+  "app_name" : "",
+  "app_locale" : "",
+  "app_language" : "",
+  "app_timezona" : "America/Sao_Paulo",
+  "app_active" : true,
+  "app_localhost" : true,
+
+  "database" :
+  {
+    "driver" : "mysql",
+    "user" : "diego",
+    "password" : "positivo1805",
+    "dbname" : "test",
+    "host" : "localhost"
+  },
+
+  "app_admin" :
+  {
+      "name" : "",
+      "login" : "",
+      "password" : "",
+      "email" : "",
+      "cellphone" : ""
+  },
+
+  "app_security" :
+  {
+    "requireToken" :
+    {
+      "form" : true,
+      "requestJavaScript" : true,
+      "requestRoute" : false
+    },
+    "monitor" :
+    {
+      "ip" : true
+    }
+  },
+
+  "app_keys" : {
+    "DEFAULT" : "default key"
+  }
+}

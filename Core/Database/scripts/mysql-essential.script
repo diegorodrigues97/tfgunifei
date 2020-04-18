@@ -1,0 +1,43 @@
+CREATE TABLE IF NOT EXISTS `system_user_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `accessKeys` varchar(255) DEFAULT NULL,
+  `date_criation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_lastUpdate` datetime DEFAULT NULL,
+  `isVisible` enum('ON','OFF') NOT NULL DEFAULT 'ON',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `system_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_group` int(11) NOT NULL DEFAULT '1',
+  `name` varchar(125) NOT NULL,
+  `lastName` varchar(255) NOT NULL,
+  `sexo` enum('M','F') NOT NULL DEFAULT 'M',
+  `login` varchar(125) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `cellPhone` varchar(15) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `date_criation` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_lastUpdate` datetime DEFAULT NULL,
+  `isVisible` enum('ON','OFF') NOT NULL DEFAULT 'ON',
+  PRIMARY KEY (`id`),
+  KEY `id_group` (`id_group`),
+  CONSTRAINT `system_user_ibfk_1` FOREIGN KEY (`id_group`) REFERENCES `system_user_group` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `system_user_historic` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  `currentRoute` text NOT NULL,
+  `currentId` text,
+  `request_form` text,
+  `user_ip` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_user` (`id_user`),
+  CONSTRAINT `system_user_historic_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `system_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `system_user_group` VALUES (1,'admin',NULL,now(),NULL,'ON');
