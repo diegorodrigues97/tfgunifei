@@ -61,9 +61,10 @@ function __construct($viewName, $vars = array()){
     $code = $this->searchTemplateReference($code);
     //Check if exists controllers reference
     $code = $this->searchControllerReference($code);
-    //Check if exists foreach loop
+    //Check if exists foreach loop and process it
     $code = $this->searchForeachReference($vars, $code);
-
+    //Check if exists conditional statements and process it
+    $code = $this->searchConditionalReference($vars, $code);
     //Load vars
     if(!empty($vars)){
         $code = $this->loadVars($vars, $code);
@@ -250,6 +251,13 @@ private function searchControllerReference($code){
     return $code;
 }
 
+/*
+|--------------------------------------------------------------------------
+| @Function: searchTemplateReference
+|--------------------------------------------------------------------------
+|
+*/
+
 private function searchTemplateReference($code){
     preg_match_all('/{{ --(.*?)-- }}/', $code, $out);
 
@@ -270,10 +278,31 @@ private function searchTemplateReference($code){
     return $code;
 }
 
+/*
+|--------------------------------------------------------------------------
+| @Function: searchForeachReference
+|--------------------------------------------------------------------------
+|
+*/
+
 private function searchForeachReference($vars, $code){
     
     $verify = new ForeachDecoder($vars, $code);
-    $verify->verify_command();
+    return $verify->verify_command();
+
+}
+
+/*
+|--------------------------------------------------------------------------
+| @Function: searchConditionalReference
+|--------------------------------------------------------------------------
+|
+*/
+
+private function searchConditionalReference($vars, $code){
+
+    $verify = new ConditionalDecoder($vars, $code);
+    return $verify->verify_command();
 
 }
 

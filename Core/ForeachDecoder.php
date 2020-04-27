@@ -25,18 +25,13 @@ class ForeachDecoder
     {
         $html_code = $this->html_code;
 
-        $comment_pattern = '#\<\!\-\-([\s\S]+)\-\-\>#';
-        $verify = preg_match($comment_pattern, $html_code, $matches);
-        $replace = '';
-        $matches = implode ( ' ' , $matches );
-        $html_code = str_replace($replace, $matches, $html_code);
-
         $foreach_pattern = '#@foreach(\s?)\((\s*)(\w+)(\s*)(\w+)\s*(in)\s*(\w+)(\s*)\)\{([\s\S]+)\}#';
         preg_match($foreach_pattern, $html_code, $matches);
 
         if(empty($matches))
         {
-            echo $this->html_code;
+            $this->html_return = $this->html_code;
+            return $this->html_return;
         }
 
         else 
@@ -126,7 +121,7 @@ class ForeachDecoder
                         $this->html_return = $this->html_return.$aux;
                     }  
                 }
-                echo $this->html_return;
+                return $this->html_return;
             }
 
             elseif ($this->element_type == "object") 
@@ -141,7 +136,7 @@ class ForeachDecoder
                         $this->html_return = $this->html_return.$aux;
                     } 
                 }
-                echo $this->html_return;
+                return $this->html_return;
             } 
      
             else 

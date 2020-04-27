@@ -32,5 +32,11 @@ return [
         "controller" => "About@Index",
         "name" => "About",
         "title" => "About"
+    ],
+    [
+        "route" => "/counter",
+        "controller" => "Counter@Index",
+        "name" => "Counter",
+        "title" => "Counter"
     ]
 ];
