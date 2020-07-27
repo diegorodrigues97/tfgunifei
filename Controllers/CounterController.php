@@ -6,7 +6,7 @@ function Index(){
     
     // vars test
     $x = 20;
-    $y = 10;
+    $y = 30;
     $z = 5;
     $a = 4;
 

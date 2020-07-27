@@ -4,150 +4,171 @@ namespace Core;
 
 class ForeachDecoder
 {
-    private $html_code; // conteudo do arquivo .html
-    private $list_content_structure; // conteudo da lista
-    private $pattern_results; // indice e valor ou atributo e valor
-    private $element_name; // elemento da lista
-    private $list_name; // lista
-    private $element_type; // tipo do elemento da lista
-    private $list_content_values; // valores da lista
-    private $html_return; // html tratado
-    private $foreach_content; // conteudo dentro das chaves do foreach
-    private $element_index; // atributo objeto ou indice array
+    private $html_code; // view html code received 
+    private $vars_list; // vars passed by the controller
+    private $html_return; // view html code returned
+    private $element_name;
+    private $element_property;
     
     function __construct($vars, $code)
     {
-        $this->list_content_structure = $vars;
+        $this->vars_list = $vars;
         $this->html_code = $code;
     }
 
     function verify_command()
     {
+        // disambiguation
         $html_code = $this->html_code;
 
-        $foreach_pattern = '#@foreach(\s?)\((\s*)(\w+)(\s*)(\w+)\s*(in)\s*(\w+)(\s*)\)\{([\s\S]+)\}#';
-        preg_match($foreach_pattern, $html_code, $matches);
+        // pattern to find (or not) the occurrences of foreach
+        $pattern = '#@foreach\s?\(\s*(\w+)\s*(\w+)\s*(in)\s*(\w+)\s*\)\{([\s\S]+)\}#';
 
+        // match all to capture more than one occurrence
+        preg_match_all($pattern, $html_code, $matches, PREG_SET_ORDER, 0);
+
+        // it means that there isn't any occurrence
         if(empty($matches))
         {
-            $this->html_return = $this->html_code;
+            $this->html_return = $html_code;
             return $this->html_return;
         }
 
-        else 
+        // it means that there is one or more occurrence
+        else
         {
-            foreach ($matches as $key => $value) 
+            $foreach = $matches[0][0];
+            $this->element_name = $matches[0][2];
+            $list_name = $matches[0][4];
+            $foreach_content = $matches[0][5];
+
+            foreach ($this->vars_list as $key => $value) 
             {
-                if($value == "in")
-                {
-                    $this->element_name = $matches[$key - 1]; // pego o elemento
-                    $this->list_name = $matches[$key + 1]; // pega a lista
+                if($key == $list_name) {
+                    $exist = TRUE;
                 }
             }
 
-            $aux_list_content_structure = $this->list_content_structure;
-            $exists = False;
-
-            foreach ($aux_list_content_structure as $key => $value)
-            {
-                if($key == $this->list_name)
-                {
-                    $exists = True;
-                }
-            }
-
-            if(!$exists)
+            if(!$exist)
             {
                 throw new \Exception("Failed", 5);
             }
-            // busca pelo element_name seguioa de um 'ponto' e de um texto com letras minusculas
-            // ou seja, busca por um array de objetos
-            $foreach_element_pattern = "#{$this->element_name}\.(\w+)#"; 
-            // o texto entre chaves fica sempre na ultima posição do array, pego ele aqui para a extração das propriedades do elemento
-            $this->foreach_content = end($matches); 
-            preg_match_all($foreach_element_pattern, $this->foreach_content, $matches_elem);
-            
-            if(!empty($matches_elem[1]))
+
+            $html_return = '';
+
+            $ttype_vars_list = gettype($this->vars_list[$list_name]);
+
+            if($ttype_vars_list == "array") 
             {
-                foreach ($matches_elem[1] as $key => $value)  // garanto que estou acessando as referências dos obj
-                { 
-                    $this->pattern_results[$key] = $value;
-                }
+                $element_pattern = "#{$this->element_name}\[\"(\w+)\"\]#";
                 
-                $this->element_index = $this->pattern_results[0]; // atributo do objeto
-                $this->element_type = "object";
-            }
-            
-            else
-            {
-                // busca pela element_name seguida de um colchetes seguido de aspas
-                // seguido de um texto com letras minusculas seguido de aspas seguido de outro colchetes
-                // ou seja,busca por um array de array
-                $foreach_element_pattern = "#{$this->element_name}(\[)(\")(\w+)(\")(\])#";
-                preg_match_all($foreach_element_pattern, $this->foreach_content, $matches_elem);
+                preg_match_all($element_pattern, $foreach_content, $matches_elem);
 
-                foreach ($matches_elem[3] as $key => $value)  // garanto que estou acessando as referências do array
-                { 
-                    $this->pattern_results[$key] = $value;
+                if(!empty($matches_elem[0])) 
+                {
+                    $access_array = 0; // element["property"]
+                }
+                else 
+                {
+                    $element_pattern = "#{$this->element_name}#";
+                    preg_match_all($element_pattern, $foreach_content, $matches_elem);
+                    if(empty($matches_elem[0])) 
+                    {
+                        throw new \Exception("Failed", 5);
+                    }
+                    $access_array = 1; // element[0], element[1], ...
                 }
 
-                $this->element_index = $this->pattern_results[0]; // pega o indice do array
-                $this->element_type = "array";
-            }
+                if($access_array == 0)
+                {
+                   $property = key($this->vars_list[$list_name][0]); // property from vars
 
-            $this->list_content_values = $this->list_content_structure[$this->list_name];
+                   $this->element_property = $matches_elem[1][0]; // property from code
 
-            if(gettype($this->list_content_values) != $this->element_type)
-            {
-                throw new \Exception("Invalid foreach type");
-            }
-
-            if($this->element_type == "array")
-            {
-                foreach ($this->list_content_values as $key => $value) {
-                    
-                    if(gettype($value) == "array")
+                    if($property != $this->element_property)
                     {
-                        $aux = $this->foreach_content;
-                        $replace = "{{ ".$this->element_name."[\"".$this->element_index."\"] }}";
-                        $aux = str_replace($replace, $value[$this->element_index], $aux);
-                        $this->html_return = $this->html_return.$aux;
+                        throw new \Exception("Failed: Property", 5);
                     }
 
-                    else 
+                    foreach ($this->vars_list[$list_name] as $key => $value) 
                     {
-                        $aux = $this->foreach_content;
-                        $aux = str_replace("{{ ".$this->element_name." }}", $value, $aux);
-                        $this->html_return = $this->html_return.$aux;
-                    }  
+                        $aux = $foreach_content;
+                        $replace = "{{ ".$this->element_name."[\"".$this->element_property."\"] }}";
+                        $aux = str_replace($replace, $value[$this->element_property], $aux);
+                        $html_return = $html_return.$aux;
+                        
+                    }
+
+                    $html_code = str_replace($foreach, $html_return, $html_code);
+
+                    $this->html_return = $html_code;
+                    return $this->html_return;
+
                 }
+
+                elseif($access_array == 1)
+                {
+                    foreach ($this->vars_list[$list_name] as $key => $value) 
+                    {
+                        $aux = $foreach_content;
+                        $replace = "{{ ".$this->element_name." }}";
+                        $aux = str_replace($replace, $value, $aux);
+                        $html_return = $html_return.$aux;
+                        
+                    }
+
+                    $html_code = str_replace($foreach, $html_return, $html_code);
+
+                    $this->html_return = $html_code;
+                    return $this->html_return;
+                }
+
+                else 
+                {
+                    throw new \Exception("Failed: Access Array", 5);
+                }
+
+            }
+
+            elseif($ttype_vars_list == "object") 
+            {
+                $aux = (array)$this->vars_list[$list_name];
+                $property = key($aux[0]); // property from vars
+
+                $element_pattern = "#{$this->element_name}\.(\w+)#";
+                preg_match_all($element_pattern, $foreach_content, $matches_elem);
+
+                if(empty($matches_elem[0])) 
+                {
+                    throw new \Exception("Failed", 5);
+                }
+                
+                $this->element_property = $matches_elem[1][0]; // property from code
+
+                if($property != $this->element_property)
+                {
+                    throw new \Exception("Failed: Property", 5);
+                }
+
+                foreach ($this->vars_list[$list_name] as $key => $value) 
+                {
+                    $aux = $foreach_content;
+                    $replace = "{{ ".$this->element_name.".".$this->element_property." }}";
+                    $aux = str_replace($replace, $value[$this->element_property], $aux);
+                    $html_return = $html_return.$aux;
+                    
+                }
+
+                $html_code = str_replace($foreach, $html_return, $html_code);
+
+                $this->html_return = $html_code;
                 return $this->html_return;
             }
 
-            elseif ($this->element_type == "object") 
-            {
-                foreach ($this->list_content_values as $key => $value) 
-                {
-                    if(gettype($value) == "array")
-                    {
-                        $aux = $this->foreach_content;
-                        $replace = "{{ ".$this->element_name.".".$this->element_index." }}";
-                        $aux = str_replace($replace, $value[$this->element_index], $aux);
-                        $this->html_return = $this->html_return.$aux;
-                    } 
-                }
-                return $this->html_return;
-            } 
-     
             else 
             {
-                throw new \Exception("Variable type not expected");
+                throw new \Exception("Failed", 5);
             }
         }
     }
 }
-
-
-
-
-

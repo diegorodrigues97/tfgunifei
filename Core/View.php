@@ -41,13 +41,15 @@ protected $tag_javaScript = array();
 protected $tag_style = array();
 protected $tag_meta = array();
 
+protected $render_php = true;
+
 /*
 |--------------------------------------------------------------------------
 | @Construct
 |--------------------------------------------------------------------------
 */
 
-function __construct($viewName, $vars = array()){
+function __construct($viewName, $vars = array(), $render_php = true){
     //Get the template defaul
     $code = File::getContent('default', 'TEMPLATE');
     if(!$code)
@@ -62,7 +64,30 @@ function __construct($viewName, $vars = array()){
     //Check if exists controllers reference
     $code = $this->searchControllerReference($code);
     //Check if exists foreach loop and process it
-    $code = $this->searchForeachReference($vars, $code);
+
+    $this->render_php = $render_php;
+
+    if($render_php) {
+        $code = $this->searchForeachReference($vars, $code);
+    }
+    else {
+
+        $data = json_encode($vars);
+
+        $script_code = "
+            <script>
+                document.addEventListener('DOMContentLoaded', (event) => {
+                    var data = {$data};
+                    var framework = new Framework(data, document);
+                })
+            </script>
+        ";
+
+        array_push($this->tag_javaScript, $script_code);
+    }
+    
+
+    
     //Check if exists conditional statements and process it
     $code = $this->searchConditionalReference($vars, $code);
     //Load vars
@@ -288,6 +313,13 @@ private function searchTemplateReference($code){
 private function searchForeachReference($vars, $code){
     
     $verify = new ForeachDecoder($vars, $code);
+    return $verify->verify_command();
+
+}
+
+private function searchForeachJSReference($vars, $code) {
+
+    $verify = new ForeachJS($vars, $code);
     return $verify->verify_command();
 
 }

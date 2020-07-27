@@ -8,12 +8,14 @@ function Index(){
 
     $props = [["name" => "joseph"],["name" => "zlatan"],["name" => "gutierr"]];
 
-    $props = (object) $props;
+    // $props = ['banana', 'laranja', 'manzana'];
 
-    //$props = [["name" => "pedro"],["name" => "diego"], ["name" => "rebola"]];
+    // $props = (object) $props;
+
+    // $props = [0,1,2,3,7];
 
     // $view = new View("About", compact('message'));
-    $view = new View("About", ['props'=>$props]);
+    $view = new View("About", ['props'=>$props], false);
 
     $view->render();
 }
