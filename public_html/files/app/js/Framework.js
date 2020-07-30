@@ -5,6 +5,7 @@ class Framework {
         this.data = data;
         this.$document = $document;
         this.verifyForeach();
+        this.verifyConditional();
     }
 
     verifyForeach() {
@@ -120,6 +121,100 @@ class Framework {
 
         else {
             return false;
+        }
+    }
+
+    verifyConditional() {
+
+        // find if tag
+        var ifCode = this.$document.getElementsByTagName('if');
+        var ifElement = this.$document.querySelector('if');
+        // check if it exists
+        if(ifCode.length === 0) {
+            // there is no if tag
+            console.log('there is no if');
+            return false;
+        }
+        let result = this.process(ifCode, this.data);
+        //
+        if(result) {
+            if(ifElement.nextElementSibling.localName === 'elif') {
+                ifElement.nextElementSibling.innerHTML = '';
+            }
+        
+            if(ifElement.nextElementSibling.localName === 'else') {
+                ifElement.nextElementSibling.innerHTML = '';
+            }
+    
+            if(ifElement.nextElementSibling.nextElementSibling.localName === 'else') {
+                ifElement.nextElementSibling.nextElementSibling.innerHTML = '';
+            }
+            console.log('if');
+            
+            return true;
+        }
+        //
+        ifCode[0].innerHTML = ''
+        
+        var elifCode = this.$document.getElementsByTagName('elif');
+        var elifElement = this.$document.querySelector('elif');
+    
+        result = this.process(elifCode, this.data);
+    
+        if(result) {
+            if(elifElement.nextElementSibling.localName === 'else') {
+                elifElement.nextElementSibling.innerHTML = '';
+            }
+            console.log('elif')
+            return true;
+        }
+        //
+        elifCode[0].innerHTML = '';
+        console.log('else or none');
+        return true;
+    
+    }
+    
+    process(htmlCode, data) {
+        // get condition
+        var condition = this.getCondition(htmlCode);
+        // check if it is a valid condition
+        if(!condition) {
+            console.log('There is no condition!');
+            // must be exception
+            return false;
+        }
+        // process condition
+        let result = this.processCondition(condition, data);
+        //
+        return result;
+    
+    }
+    
+    getCondition(htmlCode) { // 
+        if(htmlCode[0].attributes[0].name === 'condition') {
+            return htmlCode[0].attributes[0].value;
+        }
+    
+        else {
+            return false;
+        }
+    }
+    
+    processCondition(condition, data) {
+    
+        const keys = Object.keys(data);
+        const values = Object.values(data);
+    
+        for(let i = 0; i < keys.length; i++) {
+            var re = new RegExp(keys[i],"g");
+            condition = condition.replace(re, values[i]);
+        }
+    
+        try {
+            return eval(condition);
+        } catch(e) {
+            throw alert(e);
         }
     }
 

@@ -11,7 +11,7 @@ function Index(){
     $a = 4;
 
 
-    $view = new View("Counter", compact('x', 'y', 'z', 'a'));
+    $view = new View("Counter", compact('x', 'y', 'z', 'a'), false);
 
     $view->render();
 }
