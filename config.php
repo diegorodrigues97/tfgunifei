@@ -87,7 +87,7 @@ define("APP_NAME", getAppConfig()['app_name']);
 | @Section: Application Settings
 |--------------------------------------------------------------------------
 |
-*/
+*/ 
 
 date_default_timezone_set(getAppConfig()['app_timezona']);
 
@@ -127,6 +127,23 @@ function getAppConfig()
     throw new \Exception("Error on File Config", 1);
   }
   return $params;
+}
+
+/*
+|--------------------------------------------------------------------------
+| @Section: Dependency Injection
+|--------------------------------------------------------------------------
+|
+*/
+
+function __GetDependency($name)
+{
+  $dependencies = include ADS_ROOT . DIRECTORY_SEPARATOR . "DependencyInjection.php";
+
+  if(!isset($dependencies[$name]))
+    throw new Exception("Dependency {$name} not found!");
+
+  return $dependencies[$name];
 }
 
 /*

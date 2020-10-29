@@ -32,9 +32,9 @@ class Application
 */
 
 #Objects
-private $user;
-private $security;
-private $site;
+private User $user;
+private Security $security;
+private Site $site;
 #Arrays
 private $page_indices = [];
 private $box = [];

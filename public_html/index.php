@@ -1,10 +1,15 @@
 <?php
 
+ini_set('display_errors',1);
+ini_set('display_startup_erros',1);
+error_reporting(E_ALL);
+
 require_once('../config.php');
 
 use Core\Application; 
 use Core\View;
 use Core\Template;
+use Core\Exception\DatabaseMapException;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +53,17 @@ try
 	{
 		throw new \Exception('Page not found: ' . $route, 1001);
 	}
+}
+catch(DatabaseMapException $e)
+{
+	$view = new View('exception', [
+		'message'	=>	$e->getMessage(),
+		'code'		=>	$e->getCode(),
+		'file'		=>	$e->getFile(),
+		'line'		=>	$e->getLine()
+	]);
+	$view->setTitle("Error");
+	$view->render();
 }
 catch(Exception $e)
 {

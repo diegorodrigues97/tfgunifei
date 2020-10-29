@@ -133,12 +133,12 @@ function render()
     $app = Application::getApp();
     if($this->requireLogin == true && $app->getUser()->isLoggedIn() == false)
     {
-      throw new \Exception("Access Danied!", 6001);
+      throw new \Exception("Access Denied!", 6001);
     }
     //Check, is necessary some key
     if(!$this->verifyKeys())
     {
-      throw new \Exception('Access Danied!', 6002); 
+      throw new \Exception('Access Denied!', 6002); 
     }
     //Call Controller or View
     if($this->controller)

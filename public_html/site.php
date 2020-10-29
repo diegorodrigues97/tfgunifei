@@ -25,6 +25,13 @@ return [
         "route" => "/",
         "controller" => "Home@Index",
         "name" => "Home",
-        "title" => "Home"
+        "title" => "Home",
+    ],
+    [
+        "route" => "/Apresenta",
+        "controller" => "Home@Apresenta",
+        "name" => "Home",
+        "title" => "Home",
+        "vars" => ['id']
     ]
 ];

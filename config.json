@@ -4,14 +4,14 @@
   "app_language" : "",
   "app_timezona" : "America/Sao_Paulo",
   "app_active" : true,
-  "app_localhost" : true,
+  "app_localhost" : true, 
 
   "database" :
   {
     "driver" : "mysql",
     "user" : "diego",
     "password" : "positivo1805",
-    "dbname" : "test",
+    "name" : "Test",
     "host" : "localhost"
   },
 
