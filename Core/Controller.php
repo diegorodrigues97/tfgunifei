@@ -35,7 +35,11 @@ private $controller_vars = array();
 |--------------------------------------------------------------------------
 */
 
+<<<<<<< HEAD
 function __construct($controller = 'Home@Index', $vars = array())
+=======
+function __construct($controller, $vars = array())
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
 {
     try
     {

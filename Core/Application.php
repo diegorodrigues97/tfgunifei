@@ -35,6 +35,7 @@ class Application
 private User $user;
 private Security $security;
 private Site $site;
+
 #Arrays
 private $page_indices = [];
 private $box = [];

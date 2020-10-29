@@ -1,15 +1,21 @@
 <?php
 
+<<<<<<< HEAD
 ini_set('display_errors',1);
 ini_set('display_startup_erros',1);
 error_reporting(E_ALL);
 
+=======
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
 require_once('../config.php');
 
 use Core\Application; 
 use Core\View;
 use Core\Template;
+<<<<<<< HEAD
 use Core\Exception\DatabaseMapException;
+=======
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +60,7 @@ try
 		throw new \Exception('Page not found: ' . $route, 1001);
 	}
 }
+<<<<<<< HEAD
 catch(DatabaseMapException $e)
 {
 	$view = new View('exception', [
@@ -65,6 +72,8 @@ catch(DatabaseMapException $e)
 	$view->setTitle("Error");
 	$view->render();
 }
+=======
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
 catch(Exception $e)
 {
 	$view = new View('exception', [

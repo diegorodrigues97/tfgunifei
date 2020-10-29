@@ -2,12 +2,16 @@
   "autoload" :{
     "psr-4" : {
       "Core\\" : "Core",
+<<<<<<< HEAD
       "Core\\Exceptions\\" : "Core/Exceptions",
       "Core\\Database\\" : "Core/Database",
       "Core\\Exception\\" : "Core/Exception",
       "Core\\Database\\Data\\" : "Core/Database/Data",
       "Drivers\\" : "Drivers",
       "Drivers\\Database\\" : "Drivers/Database"      
+=======
+      "Core\\Database\\" : "Core/Database"
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
     }
   },
 

@@ -25,6 +25,7 @@ return [
         "route" => "/",
         "controller" => "Home@Index",
         "name" => "Home",
+<<<<<<< HEAD
         "title" => "Home",
     ],
     [
@@ -33,5 +34,20 @@ return [
         "name" => "Home",
         "title" => "Home",
         "vars" => ['id']
+=======
+        "title" => "Home"
+    ],
+    [
+        "route" => "/about",
+        "controller" => "About@Index",
+        "name" => "About",
+        "title" => "About"
+    ],
+    [
+        "route" => "/counter",
+        "controller" => "Counter@Index",
+        "name" => "Counter",
+        "title" => "Counter"
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
     ]
 ];

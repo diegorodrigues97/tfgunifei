@@ -6,11 +6,14 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+<<<<<<< HEAD
     'Drivers\\Database\\' => array($baseDir . '/Drivers/Database'),
     'Drivers\\' => array($baseDir . '/Drivers'),
     'Core\\Exceptions\\' => array($baseDir . '/Core/Exceptions'),
     'Core\\Exception\\' => array($baseDir . '/Core/Exception'),
     'Core\\Database\\Data\\' => array($baseDir . '/Core/Database/Data'),
+=======
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
     'Core\\Database\\' => array($baseDir . '/Core/Database'),
     'Core\\' => array($baseDir . '/Core'),
 );

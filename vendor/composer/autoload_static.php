@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInitd2f1abf012d612fca8924e32da3da48f
 {
     public static $prefixLengthsPsr4 = array (
+<<<<<<< HEAD
         'D' => 
         array (
             'Drivers\\Database\\' => 17,
@@ -17,12 +18,17 @@ class ComposerStaticInitd2f1abf012d612fca8924e32da3da48f
             'Core\\Exceptions\\' => 16,
             'Core\\Exception\\' => 15,
             'Core\\Database\\Data\\' => 19,
+=======
+        'C' => 
+        array (
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
             'Core\\Database\\' => 14,
             'Core\\' => 5,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+<<<<<<< HEAD
         'Drivers\\Database\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Drivers/Database',
@@ -43,6 +49,8 @@ class ComposerStaticInitd2f1abf012d612fca8924e32da3da48f
         array (
             0 => __DIR__ . '/../..' . '/Core/Database/Data',
         ),
+=======
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
         'Core\\Database\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Core/Database',

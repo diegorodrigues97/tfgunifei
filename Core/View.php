@@ -2,9 +2,17 @@
 
 namespace Core;
 
+<<<<<<< HEAD
 use Core\Validation;
 
 require_once('../config.php');
+=======
+require_once('../config.php');
+
+use Core\Validation;
+
+use Core\ForeachDecoder;
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
 
 /*
 |--------------------------------------------------------------------------
@@ -39,13 +47,22 @@ protected $tag_javaScript = array();
 protected $tag_style = array();
 protected $tag_meta = array();
 
+<<<<<<< HEAD
+=======
+protected $render_php = true;
+
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
 /*
 |--------------------------------------------------------------------------
 | @Construct
 |--------------------------------------------------------------------------
 */
 
+<<<<<<< HEAD
 function __construct($viewName, $vars = array()){
+=======
+function __construct($viewName, $vars = array(), $render_php = true){
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
     //Get the template defaul
     $code = File::getContent('default', 'TEMPLATE');
     if(!$code)
@@ -59,6 +76,36 @@ function __construct($viewName, $vars = array()){
     $code = $this->searchTemplateReference($code);
     //Check if exists controllers reference
     $code = $this->searchControllerReference($code);
+<<<<<<< HEAD
+=======
+    //Check if exists foreach loop and process it
+
+    $this->render_php = $render_php;
+
+    if($render_php) {
+        $code = $this->searchForeachReference($vars, $code);
+    }
+    else {
+
+        $data = json_encode($vars);
+
+        $script_code = "
+            <script>
+                document.addEventListener('DOMContentLoaded', (event) => {
+                    var data = {$data};
+                    var framework = new Framework(data, document);
+                })
+            </script>
+        ";
+
+        array_push($this->tag_javaScript, $script_code);
+    }
+    
+
+    
+    //Check if exists conditional statements and process it
+    $code = $this->searchConditionalReference($vars, $code);
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
     //Load vars
     if(!empty($vars)){
         $code = $this->loadVars($vars, $code);
@@ -245,6 +292,16 @@ private function searchControllerReference($code){
     return $code;
 }
 
+<<<<<<< HEAD
+=======
+/*
+|--------------------------------------------------------------------------
+| @Function: searchTemplateReference
+|--------------------------------------------------------------------------
+|
+*/
+
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
 private function searchTemplateReference($code){
     preg_match_all('/{{ --(.*?)-- }}/', $code, $out);
 
@@ -267,6 +324,44 @@ private function searchTemplateReference($code){
 
 /*
 |--------------------------------------------------------------------------
+<<<<<<< HEAD
+=======
+| @Function: searchForeachReference
+|--------------------------------------------------------------------------
+|
+*/
+
+private function searchForeachReference($vars, $code){
+    
+    $verify = new ForeachDecoder($vars, $code);
+    return $verify->verify_command();
+
+}
+
+private function searchForeachJSReference($vars, $code) {
+
+    $verify = new ForeachJS($vars, $code);
+    return $verify->verify_command();
+
+}
+
+/*
+|--------------------------------------------------------------------------
+| @Function: searchConditionalReference
+|--------------------------------------------------------------------------
+|
+*/
+
+private function searchConditionalReference($vars, $code){
+
+    $verify = new ConditionalDecoder($vars, $code);
+    return $verify->verify_command();
+
+}
+
+/*
+|--------------------------------------------------------------------------
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
 | @Function: countVar
 |--------------------------------------------------------------------------
 | Check how many times the same variable appears

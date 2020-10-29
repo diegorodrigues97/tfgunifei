@@ -42,8 +42,11 @@ function __construct(){}
 |--------------------------------------------------------------------------
 | @Function: searchPage
 |--------------------------------------------------------------------------
+<<<<<<< HEAD
 | @route param
 | @route name or address
+=======
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
 */
 
 private function searchPageParams($param, $value)
@@ -109,7 +112,11 @@ function getCurrentPage($route = false)
     //Check if is a route name 
     if(preg_match('/&(.*?)&/', $route, $out))
     {
+<<<<<<< HEAD
       $page_name = str_replace('','', $route);
+=======
+      $page_name = str_replace('&','', $route);
+>>>>>>> 592361100eb64af51f310cc678c27e430040c1a3
     }
     //get params by route, else by route name
     if(!$page_name)
